@@ -15,6 +15,7 @@ class LambdaLayer(nn.Module):
 class PACT(nn.Module):
   def __init__(self, shape, p, alpha):
     super(PACT, self).__init__()
+    p = 4
     self.alpha = nn.Parameter(torch.tensor(alpha))
     self.s = None
     self.p = torch.tensor(p)
@@ -31,7 +32,7 @@ class PACT(nn.Module):
 class REPACT(nn.Module):
   def __init__(self, shape, p, alpha):
     super(REPACT, self).__init__()
-
+    p = 4
     alpha = 1/alpha
     ainit = math.log(alpha / (1 - alpha))
     self.alpha = nn.Parameter(torch.tensor(ainit))
