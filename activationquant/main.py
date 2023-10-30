@@ -87,6 +87,8 @@ def load_dataset():
     return num_classes, train_loader, test_loader
 
 def load_model(num_classes, log):
+    #model = GoogLeNet(args.p_init, args.act, args.alpha)
+    #model = ResNet(args.p_init, args.act, args.alpha)
     model = ResNet(args.p_init, args.act, args.alpha)
 
     print_log("=> network :\n {}".format(model), log)
@@ -152,7 +154,7 @@ def main():
 
     if args.resume:
         if args.resume == 'auto':
-            args.resume = os.path.join(args.save_path, 'model_best.pth.tar')
+            args.resume = os.path.join(args.save_path, 'model_best.pth')
         if os.path.isfile(args.resume):
             print_log("=> loading checkpoint '{}'".format(args.resume), log)
             checkpoint = torch.load(args.resume)
@@ -201,7 +203,7 @@ def main():
             is_best = True
             best_acc = val_acc
 
-        f_name = 'checkpoint_{}.pth.tar'.format(epoch)
+        f_name = 'checkpoint_{}.pth'.format(epoch)
         save_checkpoint({
           'epoch': epoch + 1,
           'state_dict': model.state_dict(),
@@ -300,7 +302,7 @@ def save_checkpoint(state, is_best, save_path, filename):
     filename = os.path.join(save_path, filename)
     torch.save(state, filename)
     if is_best:
-        bestname = os.path.join(save_path, 'model_best.pth.tar')
+        bestname = os.path.join(save_path, 'model_best.pth')
         shutil.copyfile(filename, bestname)
 
 def adjust_lr(optimizers, epoch):
